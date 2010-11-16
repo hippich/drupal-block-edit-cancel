@@ -1,0 +1,5 @@
+; $Id$
+name = Block Edit Cancel
+description = Provides Cancel button on block edit forms
+core = 6.x
+

@@ -1,0 +1,61 @@
+<?php
+// $Id$
+
+function block_edit_cancel_perm() {
+  return array(
+    'access to block edit cancel button',
+    'administer block edit cancel settings',
+  );
+}
+
+
+function block_edit_cancel_menu() {
+  $items = array();
+
+  $items['admin/settings/block_edit_cancel'] = array(
+    'title'             => t('Block edit cancel settings'),
+    'page callback'     => 'drupal_get_form',
+    'page arguments'    => array('block_edit_cancel_settings_form'),
+    'access arguments'  => array('administer block edit cancel settings'),
+  );
+
+  return $items;
+}
+
+
+function block_edit_cancel_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'block_admin_configure' && user_access('access to block edit cancel button')) {
+    $form['cancel'] = array(
+      '#type'   => 'submit',
+      '#weight' => variable_get('block_edit_cancel_button_weight', 100),
+      '#value'  => t(variable_get('block_edit_cancel_button_text', 'Cancel')),
+      '#submit' => array(
+        'block_edit_cancel_cancel',
+      ),
+    );
+  }
+}
+
+
+function block_edit_cancel_cancel($form, &$form_state) {
+  // What to do here?
+}
+
+
+function block_edit_cancel_settings_form($form) {
+  $form = array();
+
+  $form['block_edit_cancel_button_text'] = array(
+    '#type'           => 'textfield',
+    '#title'          => t('Cancel button text'),
+    '#default_value'  => variable_get('block_edit_cancel_button_text', 'Cancel'),
+  );
+
+  $form['block_edit_cancel_button_weight'] = array(
+    '#type'           => 'textfield',
+    '#title'          => t('Button form element weight'),
+    '#default_value'  => variable_get('block_edit_cancel_button_weight', 100),
+  );
+
+  return system_settings_form($form);
+}
