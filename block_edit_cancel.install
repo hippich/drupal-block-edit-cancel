@@ -1,5 +1,4 @@
 <?php
-// $Id$
 
 function block_edit_cancel_uninstall() {
   variable_del('block_edit_cancel_button_text');

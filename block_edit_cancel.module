@@ -1,5 +1,4 @@
 <?php
-// $Id$
 
 function block_edit_cancel_perm() {
   return array(
